@@ -1,0 +1,24 @@
+{
+  "symbol": "IONQ",
+  "name": "IonQ",
+  "metrics": {
+    "marketCap": null,
+    "price": null,
+    "per": null,
+    "pbr": null,
+    "roe": null,
+    "revenueGrowthYoY": null
+  },
+  "monthlyPrices": [],
+  "unavailable": [
+    "marketCap",
+    "price",
+    "per(PER)",
+    "pbr(PBR)",
+    "roe(ROE)",
+    "revenueGrowthYoY",
+    "monthlyPrices(주가 이력)"
+  ],
+  "dataStatus": "데이터 없음: marketCap, price, per(PER), pbr(PBR), roe(ROE), revenueGrowthYoY, monthlyPrices(주가 이력)",
+  "updatedAt": "2026-06-13T07:20:14.417Z"
+}

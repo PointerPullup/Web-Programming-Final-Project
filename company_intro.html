@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="company_intro.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+    <header id="top-header">
+        <div class="header-inner">
+            <a href="index.html" class="brand">Market &amp; People</a>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link">인물 소개</a>
+                <a href="company_intro.html" class="nav-link active">기업 정보</a>
+            </nav>
+        </div>
+    </header>
+
+    <div id="sidebar">
+        <h2>Portfolio List</h2>
+        <div class="sidebar-buttons">
+            <div class="company-item active">
+                <button type="button" class="company-button" data-company="nvidia">NVIDIA</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="alphabet">Alphabet</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="apple">Apple</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="microsoft">Microsoft</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="spacex">SpaceX</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="meta">Meta</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="tesla">Tesla</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="tsmc">TSMC</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+            <div class="company-item">
+                <button type="button" class="company-button" data-company="ionq">IonQ</button>
+                <div class="sub-menu">
+                    <a class="sub-link" data-target="company-intro">기업소개</a>
+                    <a class="sub-link" data-target="investment-section">투자지표</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="company-main">
+        <div id="company-intro" class="company-section">
+            <div class="section-inner">
+                <div class="company-header">
+                    <div class="company-logo-box">
+                        <img id="company-logo" src="" alt="회사 로고">
+                    </div>
+                    <div class="company-heading">
+                        <h2 id="company-name">NVIDIA</h2>
+                        <p id="company-meta"></p>
+                    </div>
+                </div>
+                <p id="company-description">기업소개하는 공간</p>
+            </div>
+        </div>
+
+        <div id="investment-section" class="company-section">
+            <div class="section-inner">
+            <p class="section-title">투자 지표</p>
+
+            <div id="company-investment-information">
+                <div class="info-card">
+                    <h3>시가총액</h3>
+                    <p id="market-cap" class="value-loading">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>주당 가격</h3>
+                    <p id="stock-price" class="value-loading">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>PER</h3>
+                    <p id="per" class="value-loading">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>PBR</h3>
+                    <p id="pbr" class="value-loading">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>ROE</h3>
+                    <p id="roe" class="value-loading">-</p>
+                </div>
+                <div class="info-card">
+                    <h3>매출성장 YOY</h3>
+                    <p id="yoy" class="value-loading">-</p>
+                </div>
+            </div>
+
+            <div class="chart-block">
+                <p class="section-title">주가 추이 (최근 3년)</p>
+                <div class="chart-wrap">
+                    <canvas id="price-chart"></canvas>
+                    <p id="chart-nodata" class="chart-nodata">주가 데이터가 없습니다.</p>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const companyItems = document.querySelectorAll(".company-item");
+        const companyName   = document.querySelector("#company-name");
+        const companyDesc   = document.querySelector("#company-description");
+        const companyLogo   = document.querySelector("#company-logo");
+        const companyMeta   = document.querySelector("#company-meta");
+
+        
+        const valueEls = {
+            marketCap:        document.querySelector("#market-cap"),
+            price:            document.querySelector("#stock-price"),
+            per:              document.querySelector("#per"),
+            pbr:              document.querySelector("#pbr"),
+            roe:              document.querySelector("#roe"),
+            revenueGrowthYoY: document.querySelector("#yoy")
+        };
+        const dataCache = {};   
+        let priceChart = null;  
+
+        
+        const profiles = {
+            nvidia:    { ticker: "NVDA",      tag: "반도체 · AI 가속기" },
+            alphabet:  { ticker: "GOOGL",     tag: "인터넷 · 검색/광고" },
+            apple:     { ticker: "AAPL",      tag: "소비자 전자 · 스마트폰" },
+            microsoft: { ticker: "MSFT",      tag: "소프트웨어 · 클라우드" },
+            spacex:    { ticker: "SPCX",     tag: "우주항공 · 위성인터넷" },
+            meta:      { ticker: "META",      tag: "소셜미디어 · 광고" },
+            tesla:     { ticker: "TSLA",      tag: "전기차 · 로보틱스" },
+            tsmc:      { ticker: "TSM",       tag: "반도체 · 파운드리" },
+            ionq:      { ticker: "IONQ",      tag: "양자컴퓨팅" }
+        };
+
+        
+        const LOGO_DIR = "회사 로고들/";
+        const logos = {
+            nvidia:    "nvidia.png",
+            alphabet:  "alphabet.png",
+            apple:     "apple.png",
+            microsoft: "microsoft.png",
+            spacex:    "spacex.png",
+            meta:      "meta.png",
+            tesla:     "tesla.png",
+            tsmc:      "tsmc.png",
+            ionq:      "ionq.png"
+        };
+
+        
+        let descriptions = {};
+
+        
+        async function loadDescriptions() {
+            const res  = await fetch("기업소개_상세.md");
+            const text = await res.text();
+
+            
+            const blocks = text.split(/^## /m).slice(1);
+
+            blocks.forEach(function (block) {
+                const lines  = block.split("\n");
+                
+                const key    = lines[0].trim().split(/[\s(]/)[0].toLowerCase();
+
+                const html = lines.slice(1).join("\n")
+                    .replace(/---/g, "")                          
+                    .trim()
+                    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>") 
+                    .split(/\n\s*\n/)                             
+                    .map(p => p.trim())
+                    .filter(p => p)
+                    .join("<br><br>");                           
+
+                descriptions[key] = html;
+            });
+        }
+
+        
+        function scrollToSection(targetId) {
+            document.querySelector("#" + targetId)
+                    .scrollIntoView({ behavior: "smooth" });
+        }
+
+        
+        function fmtMarketCap(n) {
+            if (n == null) return "데이터 없음";
+            if (n >= 1e12) return "$" + (n / 1e12).toFixed(2) + "T";
+            if (n >= 1e9)  return "$" + (n / 1e9).toFixed(2) + "B";
+            if (n >= 1e6)  return "$" + (n / 1e6).toFixed(2) + "M";
+            return "$" + n.toLocaleString();
+        }
+        const fmtMoney = (n) => (n == null ? "데이터 없음" : "$" + n.toFixed(2));
+        const fmtNum   = (n) => (n == null ? "데이터 없음" : n.toFixed(2));
+        const fmtPct   = (n) => (n == null ? "데이터 없음" : n.toFixed(2) + "%");
+
+        
+        async function loadCompanyData(key) {
+            const ticker = profiles[key].ticker.toLowerCase();
+            if (dataCache[ticker]) return dataCache[ticker];
+            const res = await fetch(`data/${ticker}.json`);
+            const json = await res.json();
+            dataCache[ticker] = json;
+            return json;
+        }
+
+        
+        function setValue(el, text, isMissing) {
+            el.textContent = text;
+            el.classList.toggle("no-data", !!isMissing);
+        }
+
+        
+        async function updateInvestment(key) {
+            let info;
+            try {
+                info = await loadCompanyData(key);
+            } catch {
+                Object.values(valueEls).forEach(el => setValue(el, "데이터 없음", true));
+                renderChart(null);
+                return;
+            }
+            const m = info.metrics || {};
+            setValue(valueEls.marketCap,        fmtMarketCap(m.marketCap),     m.marketCap == null);
+            setValue(valueEls.price,            fmtMoney(m.price),             m.price == null);
+            setValue(valueEls.per,              fmtNum(m.per),                 m.per == null);
+            setValue(valueEls.pbr,              fmtNum(m.pbr),                 m.pbr == null);
+            setValue(valueEls.roe,              fmtPct(m.roe),                 m.roe == null);
+            setValue(valueEls.revenueGrowthYoY, fmtPct(m.revenueGrowthYoY),    m.revenueGrowthYoY == null);
+            renderChart(info.monthlyPrices);
+        }
+
+        
+        function renderChart(monthlyPrices) {
+            const canvas  = document.querySelector("#price-chart");
+            const nodata  = document.querySelector("#chart-nodata");
+
+            if (priceChart) { priceChart.destroy(); priceChart = null; }
+
+            if (!monthlyPrices || monthlyPrices.length === 0) {
+                canvas.style.display = "none";
+                nodata.style.display = "block";
+                return;
+            }
+            canvas.style.display = "block";
+            nodata.style.display = "none";
+
+            const labels = monthlyPrices.map(p => p.date.slice(0, 7));   
+            const prices = monthlyPrices.map(p => p.price);
+
+            priceChart = new Chart(canvas, {
+                type: "line",
+                data: {
+                    labels,
+                    datasets: [{
+                        data: prices,
+                        borderColor: "#2ebd85",
+                        backgroundColor: "rgba(46, 189, 133, 0.12)",
+                        fill: true,
+                        tension: 0.3,
+                        pointRadius: 0,
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { color: "#6e7681", maxTicksLimit: 8 } },
+                        y: { grid: { color: "rgba(255,255,255,0.05)" }, ticks: { color: "#6e7681" } }
+                    }
+                }
+            });
+        }
+
+        function showCompany(key, name) {
+            companyName.textContent = name;
+            companyDesc.innerHTML   = descriptions[key] || "기업소개를 불러오지 못했습니다.";
+            companyLogo.src         = LOGO_DIR + logos[key];   
+            companyLogo.alt         = name + " 로고";
+
+            const p = profiles[key];                           
+            companyMeta.innerHTML   = `<span class="ticker">${p.ticker}</span> · ${p.tag}`;
+
+            updateInvestment(key);                             
+        }
+
+        
+        companyItems.forEach(function (item) {
+            const button = item.querySelector(".company-button");
+
+            button.addEventListener("click", function () {
+                companyItems.forEach(i => i.classList.remove("active"));
+                item.classList.add("active");
+                showCompany(button.dataset.company, button.textContent.trim());
+                scrollToSection("company-intro");
+            });
+        });
+
+        
+        document.querySelectorAll(".sub-link").forEach(function (link) {
+            link.addEventListener("click", function () {
+                scrollToSection(link.dataset.target);
+            });
+        });
+
+        
+        loadDescriptions()
+            .then(() => showCompany("nvidia", "NVIDIA"))
+            .catch(() => {
+                companyDesc.textContent =
+                    "기업소개_상세.md 를 불러오지 못했습니다.";
+            });
+    </script>
+</body>
+</html>

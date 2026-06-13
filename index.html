@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>인물 소개</title>
+    <link rel="stylesheet" href="company_intro.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <header id="top-header">
+        <div class="header-inner">
+            <a href="index.html" class="brand">Market &amp; People</a>
+            <nav class="header-nav">
+                <a href="index.html" class="nav-link active">인물 소개</a>
+                <a href="company_intro.html" class="nav-link">기업 정보</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="people-main">
+        <div class="carousel">
+            <button type="button" class="carousel-arrow" id="prev-btn" aria-label="이전">&#8249;</button>
+            <div class="person-card" id="person-card"></div>
+            <button type="button" class="carousel-arrow" id="next-btn" aria-label="다음">&#8250;</button>
+        </div>
+
+        <div class="carousel-dots" id="carousel-dots"></div>
+    </main>
+
+    <script>
+        const card     = document.querySelector("#person-card");
+        const dotsWrap = document.querySelector("#carousel-dots");
+
+        let people = [];
+        let index  = 0;
+
+        function imgFile(name) {
+            return "people_images/" + name.toLowerCase().replace(/\s+/g, "-") + ".jpg";
+        }
+
+        async function loadPeople() {
+            const res  = await fetch("people.md");
+            const text = await res.text();
+
+            const blocks = text.split(/^## /m).slice(1);
+
+            people = blocks.map(function (block) {
+                const lines = block.split("\n");
+                const name  = lines[0].trim();
+                const rest  = lines.slice(1).join("\n");
+
+                const posMatch = rest.match(/\*\*Position:\*\*\s*(.+)/);
+                const keyMatch = rest.match(/\*\*Keywords:\*\*\s*(.+)/);
+                const position = posMatch ? posMatch[1].trim() : "";
+                const keywords = keyMatch ? keyMatch[1].trim() : "";
+
+                let short = "";
+                const introPart = rest.split(/### 인물 소개/)[1];
+                if (introPart) {
+                    const paras = introPart.split(/\n\s*\n/).map(s => s.trim()).filter(Boolean);
+                    short = paras[0] || "";
+                }
+
+                const fullStart = rest.indexOf("### ");
+                const fullMd = fullStart >= 0 ? rest.slice(fullStart) : rest;
+                const fullHtml = fullMd
+                    .replace(/---/g, "")
+                    .replace(/^### (.+)$/gm, "<h4>$1</h4>")
+                    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+                    .split(/\n\s*\n/)
+                    .map(s => s.trim())
+                    .filter(Boolean)
+                    .map(s => s.startsWith("<h4>") ? s : "<p>" + s + "</p>")
+                    .join("");
+
+                return { name, position, keywords, short, fullHtml };
+            });
+        }
+
+        function render() {
+            const p = people[index];
+            card.innerHTML =
+                '<div class="person-top">' +
+                    '<div class="person-photo"><img src="' + imgFile(p.name) + '" alt="' + p.name + '"></div>' +
+                    '<div class="person-info">' +
+                        '<h2 class="person-name">' + p.name + '</h2>' +
+                        '<p class="person-position">' + p.position + '</p>' +
+                        '<p class="person-short">' + p.short + '</p>' +
+                        '<button type="button" class="more-btn" id="more-btn">정보 더 보기 ▾</button>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="person-full" id="person-full" hidden>' + p.fullHtml + '</div>';
+
+            const moreBtn = card.querySelector("#more-btn");
+            const fullEl  = card.querySelector("#person-full");
+            moreBtn.addEventListener("click", function () {
+                if (fullEl.hasAttribute("hidden")) {
+                    fullEl.removeAttribute("hidden");
+                    moreBtn.textContent = "접기 ▴";
+                } else {
+                    fullEl.setAttribute("hidden", "");
+                    moreBtn.textContent = "정보 더 보기 ▾";
+                }
+            });
+
+            renderDots();
+        }
+
+        function renderDots() {
+            dotsWrap.innerHTML = people.map(function (_, i) {
+                return '<span class="dot ' + (i === index ? "active" : "") + '" data-i="' + i + '"></span>';
+            }).join("");
+            dotsWrap.querySelectorAll(".dot").forEach(function (d) {
+                d.addEventListener("click", function () {
+                    index = Number(d.dataset.i);
+                    render();
+                });
+            });
+        }
+
+        function go(dir) {
+            index = (index + dir + people.length) % people.length;
+            card.classList.add("fading");
+            setTimeout(function () {
+                render();
+                card.classList.remove("fading");
+            }, 150);
+        }
+
+        document.querySelector("#next-btn").addEventListener("click", function () { go(1); });
+        document.querySelector("#prev-btn").addEventListener("click", function () { go(-1); });
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowRight") go(1);
+            if (e.key === "ArrowLeft")  go(-1);
+        });
+
+        let touchX = null;
+        const carousel = document.querySelector(".carousel");
+        carousel.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; });
+        carousel.addEventListener("touchend", function (e) {
+            if (touchX === null) return;
+            const dx = e.changedTouches[0].clientX - touchX;
+            if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+            touchX = null;
+        });
+
+        loadPeople()
+            .then(function () { render(); })
+            .catch(function () {
+                card.innerHTML = "<p style='padding:20px'>people.md 를 불러오지 못했습니다. (Live Server 로 실행해주세요)</p>";
+            });
+    </script>
+</body>
+</html>

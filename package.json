@@ -1,0 +1,13 @@
+{
+  "name": "portfolio-fmp-fetch",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FMP API로 포트폴리오 기업 데이터를 받아 회사별 JSON으로 저장",
+  "scripts": {
+    "fetch": "node fetch-data.js",
+    "fetch:refresh": "node fetch-data.js --refresh"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
